@@ -99,3 +99,85 @@ Explanation:
 =================================================
 
 """
+from abc import ABC, abstractmethod
+
+
+# 2. Define the abstract base class
+class Shape(ABC):
+
+    def __init__(self, name):
+        self.name = name
+
+    @abstractmethod
+    def area(self):
+        pass
+
+    @abstractmethod
+    def perimeter(self):
+        pass
+
+
+# 3. Define the children classes
+class Circle(Shape):
+
+    def __init__(self, radius):
+        super().__init__("Circle")
+        self.radius = radius
+
+    def area(self):
+        # Using 3.14159 as PI as requested
+        return 3.14159 * (self.radius**2)
+
+    def perimeter(self):
+        return 2 * 3.14159 * self.radius
+
+
+class Rectangle(Shape):
+
+    def __init__(self, length, width):
+        super().__init__("Rectangle")
+        self.length = length
+        self.width = width
+
+    def area(self):
+        return self.length * self.width
+
+    def perimeter(self):
+        return 2 * (self.length + width)
+
+
+class Triangle(Shape):
+
+    def __init__(self, a, b, c):
+        super().__init__("Triangle")
+        self.a = a
+        self.b = b
+        self.c = c
+
+    def area(self):
+        # Heron's formula for triangle area
+        s = (self.a + self.b + self.c) / 2
+        return (s * (s - self.a) * (s - self.b) * (s - self.c)) ** 0.5
+
+    def perimeter(self):
+        return self.a + self.b + self.c
+
+
+# 4. Driver code
+if __name__ == "__main__":
+    # Try to instantiate Shape directly
+    try:
+        shape = Shape("nope")
+    except TypeError as e:
+        print("Cannot create Shape directly:")
+        print(f"    TypeError: {e}\n")
+
+    # Create children instances
+    shapes = [Circle(5), Rectangle(4, 6), Triangle(3, 4, 5)]
+
+    # Loop through shapes polymorphically
+    for s in shapes:
+        print(
+            f"{s.name:<10} -> area={s.area():.5g}, perimeter={s.perimeter():.5g}"
+        )
+       

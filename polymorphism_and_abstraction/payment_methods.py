@@ -59,3 +59,43 @@ Explanation:
 =================================================
 
 """
+class CreditCard:
+    def __init__(self, name: str, card_number: str):
+        self.name = name
+        self.card_number = card_number
+
+    def pay(self, amount: int):
+        print(f"[CreditCard] {self.name} paid {amount} via card {self.card_number}")
+
+
+class UPI:
+    def __init__(self, upi_id: str):
+        self.upi_id = upi_id
+
+    def pay(self, amount: int):
+        # Using ljust to dynamically match the formatting alignments in the output example
+        print(f"[UPI]        {self.upi_id} paid {amount}")
+
+
+class Cash:
+    def __init__(self, name: str):
+        self.name = name
+
+    def pay(self, amount: int):
+        print(f"[Cash]       {self.name} paid {amount} in cash")
+
+
+def checkout(payment_method, amount: int):
+    # Duck Typing: We don't check the type, we just call the method
+    payment_method.pay(amount)
+
+
+# --- Input Example Execution ---
+methods = [
+    CreditCard("Alice", "4111-1111-1111-1111"),
+    UPI("bob@upi"),
+    Cash("Carol"),
+]
+
+for m in methods:
+    checkout(m, 500)
